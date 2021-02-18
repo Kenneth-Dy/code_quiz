@@ -1,4 +1,5 @@
 let i = 0
+let score = 50
 const questions_answers = [
   {
     question: "What is a string?",
@@ -34,32 +35,36 @@ const questions_answers = [
   },
 ]
 
-
-// let quiz_func = () => {
-//   questions_answers.forEach(element => {
-
-//     document.addEventListener('click', event => {
-//       if (event.target.classList.contains('ans_btn')) {
-//         document.getElementById('quiz_page').innerHTML += `
-//           <div class="row justify-content-center">
-//             <div class="col-sm-6">
-//               <h1 class="display-2 text-center fw-bold question_header">${element.question}</h1>
-//             </div>
-//           </div>
-//           <div class="row justify-content-center">
-//             <div class="col-sm-6">
-//               <div class="btn-group-vertical" role="group" aria-label="answer button group">
-//                 <button type="button" class="btn btn-outline-primary btn-lg ans_btn" id="answer_1">${element.answer_1}</button>
-//                 <button type="button" class="btn btn-outline-primary btn-lg ans_btn" id="answer_2">${element.answer_2}</button>
-//                 <button type="button" class="btn btn-outline-primary btn-lg ans_btn" id="answer_3">${element.answer_3}</button>
-//                 <button type="button" class="btn btn-outline-primary btn-lg ans_btn" id="answer_4">${element.answer_4}</button>
-//               </div>
-//             </div>  
-//           </div>`
-//       }
-//     })
-//   })
-// }
+let start_render = () => {
+  document.getElementById('navbar').innerHTML = `
+    <li class="nav-item">
+      <!-- <p class="text-primary">View Highscores</p> -->
+      <a class="nav-link active highscore_btn" aria-current="page" href="#">View Highscores</a>
+    </li>
+    <li class="nav-item">
+      <!-- This will be the timer slot -->
+    </li>
+  `
+  document.getElementById('quiz_page').innerHTML = `
+    <div class="row justify-content-center">
+      <div class="col-sm-6">
+        <h1 class="display-1 text-center fw-bolder">Code Quiz</h1>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-6 align-self-center">
+        <p class="fs-3 text-center">Take the Quiz to test your Javascript knowledge! Answer the questions as fast as you can before the timer runs out. Make sure to get right answer or each wrong one will decrease your time.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-6">
+        <p class ="text-center">
+          <button type="button" class="btn btn-primary btn-lg start_btn" id="start_btn">Start</button>
+        </p>
+      </div>
+    </div>
+  `
+}
 
 let quiz_render = () => {
   document.getElementById('quiz_page').innerHTML = `
@@ -98,15 +103,14 @@ let final_score_render = () => {
       </div>      
     </div>
   `
-  document.getElementById('navbar').innerHTML = ``
-  
-  document.getElementById('submit_btn').addEventListener('click', event => {
-    event.preventDefault()
-    highscore_render()
-    // document.getElementById('quiz_page').innerHTML = `
-    //       <h1>Is it working?</h1>
-    //       <h1>${document.getElementById('initials').value}</h1>`
-  })
+
+  // document.getElementById('submit_btn').addEventListener('click', event => {
+  //   event.preventDefault()
+  //   highscore_render()
+  //   // document.getElementById('quiz_page').innerHTML = `
+  //   //       <h1>Is it working?</h1>
+  //   //       <h1>${document.getElementById('initials').value}</h1>`
+  // })
 }
 
 let highscore_render = () => {
@@ -147,51 +151,66 @@ let highscore_render = () => {
     </div>
     <div class="row justify-content-center">
       <div class="col-sm-6">
-        <button type="button" class="btn btn-primary">Start Over</button>
-        <button type="button" class="btn btn-primary">Reset Highscores</button>
+        <button type="button" class="btn btn-primary start_over_btn">Start Over</button>
+        <button type="button" class="btn btn-primary reset_btn">Reset Highscores</button>
       </div>
     </div>`
+
+  document.getElementById('navbar').innerHTML = ``
 }
 
-document.getElementById('start_btn').addEventListener('click', event => {
-  i = 0
-  quiz_render()
-  i++
-  // document.getElementById('quiz_page').innerHTML = `
-  //     <div class="row justify-content-center">
-  //     <div class="col-sm-6">
-  //       <h1 class="display-2 text-center fw-bold question_header">Question 1</h1>
-  //     </div>
-  //   </div>
-  //   <div class="row justify-content-center">
-  //     <div class="col-sm-6">
-  //       <div class="btn-group-vertical" role="group" aria-label="answer button group">
-  //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_1">Answer 1</button>
-  //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_2">Answer 2</button>
-  //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_3">Answer 3</button>
-  //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_4">Answer 4</button>
-  //       </div>
-  //     </div>  
-  //   </div>
+// document.getElementById('start_btn').addEventListener('click', event => {
+//   i = 0
+//   quiz_render()
+//   i++
+//   // document.getElementById('quiz_page').innerHTML = `
+//   //     <div class="row justify-content-center">
+//   //     <div class="col-sm-6">
+//   //       <h1 class="display-2 text-center fw-bold question_header">Question 1</h1>
+//   //     </div>
+//   //   </div>
+//   //   <div class="row justify-content-center">
+//   //     <div class="col-sm-6">
+//   //       <div class="btn-group-vertical" role="group" aria-label="answer button group">
+//   //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_1">Answer 1</button>
+//   //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_2">Answer 2</button>
+//   //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_3">Answer 3</button>
+//   //         <button type="button" class="btn btn-outline-primary btn-lg" id="answer_4">Answer 4</button>
+//   //       </div>
+//   //     </div>  
+//   //   </div>
 
-  // `
-})
+//   // `
+// })
 
 document.addEventListener('click', event => {
   if (event.target.classList.contains('ans_btn')) {
     if(i >= questions_answers.length){
       final_score_render()
-      // document.getElementById('submit_btn').addEventListener('click', event => {
-      //   event.preventDefault()
-
-      //   document.getElementById('quiz_page').innerHTML = `
-      //     <h1>Is it working?</h1>
-      //     <h1>${document.getElementById('initials').value}</h1>`
-      // })
     }else{
       quiz_render()
       i++
     }    
   }
+  if(event.target.classList.contains('start_btn')) {
+    i = 0
+    quiz_render()
+    i++
+  }
+  if (event.target.classList.contains('submit_btn')) {
+    event.preventDefault()
+    highscore_render()
+  }
+  if (event.target.classList.contains('reset_btn')) {
+    
+  }
+  if (event.target.classList.contains('highscore_btn')) {
+    highscore_render()
+  }
+  if (event.target.classList.contains('start_over_btn')) {
+    start_render()
+  }
 })
+
+// start_render()
 
