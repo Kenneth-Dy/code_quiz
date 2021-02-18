@@ -1,5 +1,6 @@
 let i = 0
 let score = 50
+let stop_timer = false
 const questions_answers = [
   {
     question: "What is a string?",
@@ -7,7 +8,7 @@ const questions_answers = [
     answer_2: "Answer 2",
     answer_3: "Answer 3",
     answer_4: "Answer 4",
-    answer: "answer 1"
+    answer: "answer_1"
   },
   {
     question: "Question 2",
@@ -15,7 +16,7 @@ const questions_answers = [
     answer_2: "Answer 2",
     answer_3: "Answer 3",
     answer_4: "Answer 4",
-    answer: "answer 2"
+    answer: "answer_2"
   },
   {
     question: "Question 3",
@@ -23,7 +24,7 @@ const questions_answers = [
     answer_2: "Answer 2",
     answer_3: "Answer 3",
     answer_4: "Answer 4",
-    answer: "answer 2"
+    answer: "answer_2"
   },
   {
     question: "Question 4",
@@ -31,20 +32,20 @@ const questions_answers = [
     answer_2: "Answer 2",
     answer_3: "Answer 3",
     answer_4: "Answer 4",
-    answer: "answer 2"
+    answer: "answer_2"
   },
 ]
 
 let start_render = () => {
   document.getElementById('navbar').innerHTML = `
     <li class="nav-item">
-      <!-- <p class="text-primary">View Highscores</p> -->
       <a class="nav-link active highscore_btn" aria-current="page" href="#">View Highscores</a>
     </li>
     <li class="nav-item">
-      <!-- This will be the timer slot -->
+      <a class="nav-link disabled timer text-dark" id="time" aria-current="timer" href="#"></a>
     </li>
   `
+
   document.getElementById('quiz_page').innerHTML = `
     <div class="row justify-content-center">
       <div class="col-sm-6">
@@ -64,6 +65,7 @@ let start_render = () => {
       </div>
     </div>
   `
+  document.getElementById('time').textContent = `Time: ${score}`
 }
 
 let quiz_render = () => {
@@ -185,17 +187,24 @@ let highscore_render = () => {
 
 document.addEventListener('click', event => {
   if (event.target.classList.contains('ans_btn')) {
-    if(i >= questions_answers.length){
-      final_score_render()
-    }else{
-      quiz_render()
+    // if btn id === array[i].answer 
+    // set timeout "correct!" for 1 second
+    // else set timeout "wrong!" for 1 second 
+    // score -= 10 
+
+    //Could just add stop_timer here as a way to stop the count and render page
+    if(i < questions_answers.length){
       i++
-    }    
+      if (i < questions_answers.length) {
+        quiz_render()
+      }
+    }
   }
   if(event.target.classList.contains('start_btn')) {
     i = 0
+    stop_timer = false
     quiz_render()
-    i++
+    start_on_click()
   }
   if (event.target.classList.contains('submit_btn')) {
     event.preventDefault()
@@ -205,12 +214,30 @@ document.addEventListener('click', event => {
     
   }
   if (event.target.classList.contains('highscore_btn')) {
+    stop_timer = true
     highscore_render()
   }
   if (event.target.classList.contains('start_over_btn')) {
+    score = 50 
     start_render()
   }
 })
 
-// start_render()
+start_render()
 
+let start_on_click = () => {
+  let timer = setInterval(() => {
+
+    if (stop_timer === true) {
+      clearInterval(timer)
+    }else{
+      if (score <= 0 || i >= questions_answers.length) {
+        final_score_render()
+        document.getElementById('final_score').textContent = `${score}`
+        clearInterval(timer)
+      }
+      score--
+      document.getElementById('time').textContent = `Time: ${score}`
+    }
+  }, 1000)
+}
