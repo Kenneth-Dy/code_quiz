@@ -2,6 +2,7 @@ let i = 0
 let score = 50
 let stop_timer = false
 let timeout_response
+let score_table = JSON.parse(localStorage.getItem('score_table')) || []
 const questions_answers = [
   {
     question: "What is a string?",
@@ -120,7 +121,7 @@ let final_score_render = () => {
           <form>
             <div class="mb-3">
               <label for="initials" class="form-label">Enter Initials</label>
-              <input type="text" name="initials" class="form-control" id="initials">
+              <input type="text" name="initials" class="form-control initials" id="initials">
             </div>
             <button type="submit" class="btn btn-primary submit_btn" id="submit_btn">Submit</button>
           </form>
@@ -129,10 +130,10 @@ let final_score_render = () => {
     </div>
   `
   if (score <= 0) {
+    score = 0
     document.getElementById('final_score').textContent = `0`
   }else {
     document.getElementById('final_score').textContent = `${score}`
-
   }
 
   // document.getElementById('submit_btn').addEventListener('click', event => {
@@ -161,21 +162,7 @@ let highscore_render = () => {
               <th scope="col">Score</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-            </tr>
+          <tbody id="table_body">
           </tbody>
         </table>
       </div>
@@ -188,6 +175,18 @@ let highscore_render = () => {
     </div>`
 
   document.getElementById('navbar').innerHTML = ``
+  
+  let j = 1
+  score_table.forEach(elem => {
+    
+    document.getElementById('table_body').innerHTML +=`
+      <tr>
+        <th scope="row">${j}</th>
+        <td>${elem.rec_initials}</td>
+        <td>${elem.rec_score}</td>
+      </tr>`
+    j++
+  })
 }
 
 document.addEventListener('click', event => {
@@ -222,10 +221,21 @@ document.addEventListener('click', event => {
   }
   if (event.target.classList.contains('submit_btn')) {
     event.preventDefault()
+
+    let table_elem = {
+      rec_score: score,
+      rec_initials: document.getElementById('initials').value
+    }
+
+    score_table.push(table_elem)
+    localStorage.setItem('score_table', JSON.stringify(score_table))
+
     highscore_render()
   }
   if (event.target.classList.contains('reset_btn')) {
-    
+    score_table = []
+    localStorage.clear()
+    highscore_render()
   }
   if (event.target.classList.contains('highscore_btn')) {
     stop_timer = true
