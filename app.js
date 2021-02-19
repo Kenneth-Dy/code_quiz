@@ -121,7 +121,7 @@ let final_score_render = () => {
           <form>
             <div class="mb-3">
               <label for="initials" class="form-label">Enter Initials</label>
-              <input type="text" name="initials" class="form-control initials" id="initials">
+              <input type="text" name="initials" class="form-control initials" id="initials" maxlength="2">
             </div>
             <button type="submit" class="btn btn-primary submit_btn" id="submit_btn">Submit</button>
           </form>
@@ -135,14 +135,6 @@ let final_score_render = () => {
   }else {
     document.getElementById('final_score').textContent = `${score}`
   }
-
-  // document.getElementById('submit_btn').addEventListener('click', event => {
-  //   event.preventDefault()
-  //   highscore_render()
-  //   // document.getElementById('quiz_page').innerHTML = `
-  //   //       <h1>Is it working?</h1>
-  //   //       <h1>${document.getElementById('initials').value}</h1>`
-  // })
 }
 
 let highscore_render = () => {
@@ -176,9 +168,10 @@ let highscore_render = () => {
 
   document.getElementById('navbar').innerHTML = ``
   
+  score_table.sort((a, b) => b.rec_score - a.rec_score)
+
   let j = 1
   score_table.forEach(elem => {
-    
     document.getElementById('table_body').innerHTML +=`
       <tr>
         <th scope="row">${j}</th>
@@ -208,7 +201,6 @@ document.addEventListener('click', event => {
     if (i >= questions_answers.length){
       stop_timer = true
       final_score_render()
-      // document.getElementById('final_score').textContent = `${score}`
     }else{
       quiz_render()
     }
@@ -224,7 +216,7 @@ document.addEventListener('click', event => {
 
     let table_elem = {
       rec_score: score,
-      rec_initials: document.getElementById('initials').value
+      rec_initials: document.getElementById('initials').value.toUpperCase()
     }
 
     score_table.push(table_elem)
