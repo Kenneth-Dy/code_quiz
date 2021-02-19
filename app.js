@@ -6,34 +6,34 @@ let score_table = JSON.parse(localStorage.getItem('score_table')) || []
 const questions_answers = [
   {
     question: "What is a string?",
-    answer_1: "letters dwqdww wwwww  wwwwwwwwwww wwwwwwwwwwwwwwwww wwwwwwwwwwww wwwwww wwwwwwwww wwwww",
-    answer_2: "Answer 2",
-    answer_3: "Answer 3",
-    answer_4: "Answer 4",
-    solution: "answer_1"
-  },
-  {
-    question: "Question 2",
-    answer_1: "Answer 1",
-    answer_2: "Answer 2",
-    answer_3: "Answer 3",
-    answer_4: "Answer 4",
+    answer_1: "Letters in an alphabet",
+    answer_2: "A sequence of characters",
+    answer_3: "Multiple hyphens bunched together",
+    answer_4: "What a ball of yarn is made out of",
     solution: "answer_2"
   },
   {
-    question: "Question 3",
-    answer_1: "Answer 1",
-    answer_2: "Answer 2",
-    answer_3: "Answer 3",
-    answer_4: "Answer 4",
+    question: "How do you initialize an object?",
+    answer_1: "Brackets",
+    answer_2: "Parantheses",
+    answer_3: "Curly Brackets",
+    answer_4: "Objects aren't real",
     solution: "answer_3"
   },
   {
-    question: "Question 4",
-    answer_1: "Answer 1",
-    answer_2: "Answer 2",
-    answer_3: "Answer 3",
-    answer_4: "Answer 4",
+    question: "What does a conditional statement require?",
+    answer_1: "A boolean value",
+    answer_2: "A for loop",
+    answer_3: "A string value",
+    answer_4: "A signature to make it binding",
+    solution: "answer_3"
+  },
+  {
+    question: "Which one is NOT a datatype?",
+    answer_1: "boolean",
+    answer_2: "string",
+    answer_3: "integer",
+    answer_4: "pizza",
     solution: "answer_4"
   },
 ]
@@ -60,6 +60,7 @@ const start_timeout = () => {
   }, 2000)
 }
 
+// These render functions make the bulk of the HTML elements and are linked to a corresponding click event.
 let start_render = () => {
   document.getElementById('navbar').innerHTML = `
     <li class="nav-item">
@@ -182,7 +183,17 @@ let highscore_render = () => {
   })
 }
 
+// This is a massive event listener to handle most of the user inputs.
 document.addEventListener('click', event => {
+  // This event when triggered will start the timer and render the quiz.
+  if (event.target.classList.contains('start_btn')) {
+    i = 0
+    stop_timer = false
+    quiz_render()
+    start_interval()
+  }
+  // This event when triggered loops through the questions and responding whether the answer was right or worng.
+  // It also changes the timer and renders the final score page after the last question.
   if (event.target.classList.contains('ans_btn')) {
 
     if(event.target.id === questions_answers[i].solution) {
@@ -205,12 +216,8 @@ document.addEventListener('click', event => {
       quiz_render()
     }
   }
-  if(event.target.classList.contains('start_btn')) {
-    i = 0
-    stop_timer = false
-    quiz_render()
-    start_interval()
-  }
+  // This event when triggered adds the user's score and initials to the score_table array and local storage.
+  // Renders the high score page as well
   if (event.target.classList.contains('submit_btn')) {
     event.preventDefault()
 
@@ -224,18 +231,21 @@ document.addEventListener('click', event => {
 
     highscore_render()
   }
+  // This event when triggered will reset the highscores by assigning an empty array and clearing local storage.
   if (event.target.classList.contains('reset_btn')) {
     score_table = []
     localStorage.clear()
     highscore_render()
   }
-  if (event.target.classList.contains('highscore_btn')) {
-    stop_timer = true
-    highscore_render()
-  }
+  // This event when triggered will bring the user back to the start page and reset the time to the default.
   if (event.target.classList.contains('start_over_btn')) {
     score = 50 
     start_render()
+  }
+  // This event when triggered will render the highscore page and stop the timer.
+  if (event.target.classList.contains('highscore_btn')) {
+    stop_timer = true
+    highscore_render()
   }
 })
 
