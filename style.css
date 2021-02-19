@@ -13,3 +13,10 @@
 .col-sm-10 {
   height: 25vh;
 }
+
+@media screen and (max-height:425px) {
+
+  .col-sm-10 {
+    height: 35vh;
+  } 
+}

@@ -97,7 +97,7 @@ let quiz_render = () => {
   document.getElementById('quiz_page').innerHTML = `
     <div class="row justify-content-center">
       <div class="col-sm-10">
-        <h1 class="display-2 text-center fw-bold question_header">${questions_answers[i].question}</h1>
+        <h1 class="display-4 text-center fw-bold question_header">${questions_answers[i].question}</h1>
       </div>
     </div>
     <div class="row justify-content-center">
