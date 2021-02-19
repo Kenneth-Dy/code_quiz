@@ -37,6 +37,28 @@ const questions_answers = [
   },
 ]
 
+const start_interval = () => {
+  let timer = setInterval(() => {
+    if (stop_timer === true) {
+      clearInterval(timer)
+    } else {
+      if (score <= 0) {
+        final_score_render()
+        clearInterval(timer)
+      }
+      score--
+      document.getElementById('time').textContent = `Time: ${score}`
+    }
+  }, 1000)
+}
+
+const start_timeout = () => {
+  clearTimeout(timeout_response)
+  timeout_response = setTimeout(() => {
+    document.getElementById('quiz_response').innerHTML = ``
+  }, 2000)
+}
+
 let start_render = () => {
   document.getElementById('navbar').innerHTML = `
     <li class="nav-item">
@@ -216,27 +238,3 @@ document.addEventListener('click', event => {
 })
 
 start_render()
-
-let start_interval = () => {
-  let timer = setInterval(() => {
-    if (stop_timer === true) {
-      clearInterval(timer)
-    }else{
-      if (score <= 0 ) {
-        final_score_render()
-        // document.getElementById('final_score').textContent = `0`
-        clearInterval(timer)
-      }
-      score--
-      document.getElementById('time').textContent = `Time: ${score}`
-    }
-  }, 1000)
-}
-
-let start_timeout = () => {
-  clearTimeout(timeout_response)
-  timeout_response = setTimeout(() => {
-    document.getElementById('quiz_response').innerHTML = ``
-  }, 2000)
-}
-// || i >= questions_answers.length  --this goes up there
