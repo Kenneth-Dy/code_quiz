@@ -9,3 +9,7 @@
 .btn-group-vertical {
   padding: 1vh;
 }
+
+.col-sm-10 {
+  height: 25vh;
+}

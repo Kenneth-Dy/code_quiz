@@ -5,7 +5,7 @@ let timeout_response
 let score_table = JSON.parse(localStorage.getItem('score_table')) || []
 const questions_answers = [
   {
-    question: "What is a string?",
+    question: "Describe a string datatype.",
     answer_1: "Letters in an alphabet",
     answer_2: "A sequence of characters",
     answer_3: "Multiple hyphens bunched together",
@@ -96,17 +96,17 @@ let start_render = () => {
 let quiz_render = () => {
   document.getElementById('quiz_page').innerHTML = `
     <div class="row justify-content-center">
-      <div class="col-sm-6">
+      <div class="col-sm-10">
         <h1 class="display-2 text-center fw-bold question_header">${questions_answers[i].question}</h1>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-sm-6">
-        <div class="btn-group-vertical" role="group" aria-label="answer button group">
-          <button type="button" class="btn btn-outline-primary btn-lg ans_btn mb-1" id="answer_1">${questions_answers[i].answer_1}</button>
-          <button type="button" class="btn btn-outline-primary btn-lg ans_btn mb-1" id="answer_2">${questions_answers[i].answer_2}</button>
-          <button type="button" class="btn btn-outline-primary btn-lg ans_btn mb-1" id="answer_3">${questions_answers[i].answer_3}</button>
-          <button type="button" class="btn btn-outline-primary btn-lg ans_btn mb-1" id="answer_4">${questions_answers[i].answer_4}</button>
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-outline-primary btn-lg ans_btn" id="answer_1">${questions_answers[i].answer_1}</button>
+          <button type="button" class="btn btn-outline-primary btn-lg ans_btn" id="answer_2">${questions_answers[i].answer_2}</button>
+          <button type="button" class="btn btn-outline-primary btn-lg ans_btn" id="answer_3">${questions_answers[i].answer_3}</button>
+          <button type="button" class="btn btn-outline-primary btn-lg ans_btn " id="answer_4">${questions_answers[i].answer_4}</button>
         </div>
       </div>  
     </div>`
@@ -131,7 +131,6 @@ let final_score_render = () => {
     </div>
   `
   if (score <= 0) {
-    score = 0
     document.getElementById('final_score').textContent = `0`
   }else {
     document.getElementById('final_score').textContent = `${score}`
@@ -221,6 +220,7 @@ document.addEventListener('click', event => {
   if (event.target.classList.contains('submit_btn')) {
     event.preventDefault()
 
+    if(score < 0){score = 0}
     let table_elem = {
       rec_score: score,
       rec_initials: document.getElementById('initials').value.toUpperCase()
